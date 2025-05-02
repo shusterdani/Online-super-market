@@ -1,3 +1,4 @@
+"use strict";
 
 let productsList = [];
 
@@ -7,21 +8,28 @@ const categorySelect = document.getElementById("categorySelect");
 const urlBox = document.getElementById("urlBox");
 const tbodyContainer = document.getElementById("tbodyContainer");
 
+
+//Load data from local storage:
 function loadProducts() {
     loadProduct();
     displayProduct();
+    totalProductsFunction();
+    totalPriceFunction();
+    priceAvgFunction();
 
 }
 
+// Main Function to save Data and display date:
 function addProduct() {
     pushProduct();
-    clearForm();
     saveProduct();
     displayProduct();
-    totalProductsF();
-    totalPriceF();
-    priceAvgF();
+    totalProductsFunction();
+    totalPriceFunction();
+    priceAvgFunction();
 }
+
+
 
 function pushProduct() {
     const productName = nameBox.value;
@@ -34,8 +42,9 @@ function pushProduct() {
     if(!isValid)
         return;
     productsList.push(product);
-    
+    clearForm();
 }
+
 
 
 function clearForm() {
@@ -66,7 +75,18 @@ function displayProduct() {
     tbodyContainer.innerHTML = content;
 }
 
+function deleteMe(index) {
+    productsList.splice(index, 1);
+    displayProduct();
+    saveProduct();
+    totalProductsFunction();
+    totalPriceFunction();
+    priceAvgFunction();
+}
 
+
+
+// Save and Load to Local Storage:
 function saveProduct() {
     const saveProducts = JSON.stringify(productsList);
     localStorage.setItem("products", saveProducts);
@@ -77,6 +97,9 @@ function loadProduct() {
        productsList = JSON.parse(getProducts);
 }
 
+
+
+// Product Input Validation:
 function isValidProduct() {
     const productName = nameBox.value;
     const productPrice = priceBox.value;
@@ -91,7 +114,11 @@ function isValidProduct() {
         return false;
     }
     if(productPrice > 1000){
-        alert("Product Price is Invalid");
+        alert("Product Price is too High!");
+        return false;
+    }
+    if(productPrice < 0){
+        alert("Product Price can't be less than 0!");
         return false;
     }
     if(!productCategory){
@@ -105,12 +132,15 @@ function isValidProduct() {
     return true;
 }
 
-function totalProductsF() {
+
+
+// More meta data about the products:
+function totalProductsFunction() {
     const totalProducts = document.getElementById("totalProducts");
     totalProducts.innerHTML = productsList.length;
 }
 
-function totalPriceF() {
+function totalPriceFunction() {
     const totalPrice = document.getElementById("totalPrice");
     let price = 0;
     for(const product in productsList) {
@@ -119,7 +149,7 @@ function totalPriceF() {
     totalPrice.innerHTML = price;
 }
 
-function priceAvgF() {
+function priceAvgFunction() {
     const totalAverage = document.getElementById("totalAverage");
     let priceAvg = 0;
     let price = 0;
@@ -127,17 +157,12 @@ function priceAvgF() {
         price += +productsList[product].productPrice;
     }
     priceAvg = price / productsList.length;
-    totalAverage.innerHTML = priceAvg.toFixed(2);
+    totalAverage.innerHTML = productsList.length === 0 ? "0" : priceAvg.toFixed(2);
 }
 
-function deleteMe(index) {
-    productsList.splice(index, 1);
-    displayProduct();
-    saveProduct();
-    totalProductsF();
-    totalPriceF();
-    priceAvgF();
-}
+
+
+
 
 
 

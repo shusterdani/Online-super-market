@@ -18,12 +18,14 @@
         <input type="number" id="priceBox" autocomplete="off" placeholder="Example: 12" step=".01">
         <br>
         <label for="categorySelect">Select Category: </label>
-        <select name="" id="categorySelect" placeholder="Choose">
-            <option value="" selected disabled hidden>Select Category</option>
+        <select name="Category" id="categorySelect">
+            <option value="hidden" selected disabled hidden>Select Category</option>
             <option value="Drinks">Drinks</option>
             <option value="Meat">Meat</option>
             <option value="Diary">Diary</option>
+            <option value="Oats">Oats</option>
             <option value="Snacks">Snacks</option>
+            <option value="Fruits">Fruits</option>
             <option value="Basic">Basic</option>
         </select>
         <br>
@@ -46,11 +48,11 @@
         <tbody id="tbodyContainer"></tbody>
     </table>
     <hr>
-    <label for="totalProducts" class="infoLabel">Total Products: </label>
+    <label class="infoLabel">Total Products: </label>
     <span id="totalProducts">________</span>
-    <label for="totalPrice" class="infoLabel">Total Price: </label>
+    <label class="infoLabel">Total Price: </label>
     <span id="totalPrice">________</span>
-    <label for="totalAverage" class="infoLabel">Price Average: </label>
+    <label class="infoLabel">Price Average: </label>
     <span id="totalAverage">________</span>
 
 </body>
